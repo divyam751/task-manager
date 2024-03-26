@@ -49,6 +49,7 @@ app.post("/login", async (req, res) => {
         .json({ message: "User not found, please signup first" });
     }
 
+    console.log(user);
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       return res
@@ -57,7 +58,9 @@ app.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
-    res.status(200).json({ message: "Login successful", token });
+    res
+      .status(200)
+      .json({ name: user.name, message: "Login successful", token });
   } catch (error) {
     console.error("Error while logging in:", error);
     res
