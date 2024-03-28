@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "../styles/Task.css";
 import userImg from "../assets/user.png";
 import emptyTask from "../assets/no-task.png";
@@ -36,53 +36,52 @@ const Task = () => {
     console.log("Task data:", taskData);
   };
 
+  const fetchTasks = useCallback(
+    debounce(async () => {
+      try {
+        const response = await axios.get(
+          "https://task-manager-pi-topaz.vercel.app/api/tasks/",
+          {
+            params: {
+              title: searchText,
+              sortPriority: sortPriority,
+              sortCompleted: sortCompleted,
+              sortPending: sortPending,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        dispatch(setApiData(response.data));
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    }, 500),
+    [searchText, sortPriority, sortCompleted, sortPending, token, dispatch]
+  );
+
   useEffect(() => {
     dispatch(getTasks(token));
   }, [dispatch, token]);
 
-  const fetchTasks = debounce(async () => {
-    try {
-      const response = await axios.get(
-        "https://task-manager-pi-topaz.vercel.app/api/tasks/",
-        {
-          params: {
-            title: searchText,
-            sortPriority: sortPriority,
-            sortCompleted: sortCompleted,
-            sortPending: sortPending,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      dispatch(setApiData(response.data));
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  }, 500); // Debounce time
-
   useEffect(() => {
     fetchTasks();
-  }, [searchText, sortPriority, sortCompleted, sortPending, token, fetchTasks]);
+  }, [fetchTasks]);
 
   // Filter tasks based on checkbox values
   let filteredTasks = [...apiData];
 
   if (!sortPriority && !sortCompleted && !sortPending) {
-    // When no checkbox is checked, sort by generated ID in descending order
     filteredTasks = filteredTasks.sort((a, b) => b._id.localeCompare(a._id));
   } else {
-    // Apply additional filters based on checkbox combinations
     if (sortCompleted && sortPending) {
-      // Show both completed and pending tasks, completed tasks first
       filteredTasks = filteredTasks.sort((a, b) => {
         if (a.completed && !b.completed) return -1;
         if (!a.completed && b.completed) return 1;
         return 0;
       });
     } else if (sortPriority) {
-      // Sort by priority if only priority checkbox is checked
       filteredTasks = filteredTasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
         return priorityOrder[a.priority] - priorityOrder[b.priority];
@@ -90,7 +89,6 @@ const Task = () => {
     }
   }
 
-  // Apply additional filters for completed and pending tasks if other checkboxes are checked
   if (sortCompleted && !sortPending) {
     filteredTasks = filteredTasks.filter((task) => task.completed);
   }
@@ -161,7 +159,7 @@ const Task = () => {
         <div className="task-rightChild-cards">
           {filteredTasks.length === 0 ? (
             <div className="task-rightChild-cards-emptycard">
-              <img src={emptyTask} />
+              <img src={emptyTask} alt="Empty Task" />
               <p>No tasks found. Add a task!</p>
             </div>
           ) : (
