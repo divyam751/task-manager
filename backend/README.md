@@ -1,91 +1,71 @@
-# Voyawander - Documentation for Frontend API
+# Task Manager
 
-This documentation provides developers with information on how to interact with the backend API endpoints, routes, and utilize the searching functionality for the Voyawander travel website's frontend.
+Task Manager is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application designed to manage tasks efficiently. This repository contains the backend code for the Task Manager project.
 
-## Table of Contents
+## Deployment
 
-- [Introduction](#introduction)
-- [API Endpoints](#api-endpoints)
-  - [Destinations](#destinations)
-  - [Hotels](#hotels)
-  - [Flights](#flights)
-  - [Messages](#messages)
-- [Searching](#searching)
-- [Example Usage](#example-usage)
+The backend of the Task Manager project is deployed on Vercel. You can access the deployed backend via the following link:
 
-## Introduction
+[Task Manager Backend](https://task-manager-pi-topaz.vercel.app/)
 
-The Voyawander frontend interacts with the backend API to fetch data related to destinations, hotels, flights, and messages. Developers can use the provided API endpoints to perform various actions such as fetching data, creating new entries, updating entries, and deleting entries.
+## Features
 
-## API Endpoints
+- **User Authentication**: Users can sign up and log in securely to manage their tasks.
+- **Task Management**: Users can create, read, update, and delete tasks.
+- **Priority and Sorting**: Tasks can be prioritized and sorted based on priority or completion status.
+- **Customization**: Users can customize task titles, descriptions, priorities, and colors.
 
-### Destinations
+## Getting Started
 
-- **GET /destinations**: Fetch a list of all destinations.
-- **POST /destinations/create**: Create a new destination.
-- **PUT /destinations/edit/:destinationId**: Update a destination by ID.
-- **DELETE /destinations/delete/:destinationId**: Delete a destination by ID.
+To run the backend locally, follow these steps:
 
-### Hotels
+1. Clone this repository to your local machine.
+2. Navigate to the backend directory.
+3. Install dependencies using `npm install`.
+4. Start the server using `npm start`.
+5. Access the server endpoints using a tool like Postman or integrate it with the frontend of the Task Manager project.
 
-- **GET /hotels**: Fetch a list of all hotels.
-- **POST /hotels/create**: Create a new hotel.
-- **PUT /hotels/edit/:hotelId**: Update a hotel by ID.
-- **DELETE /hotels/delete/:hotelId**: Delete a hotel by ID.
+## Backend Structure
 
-### Flights
+- **`tasks.routes.js`**: Contains the routes for handling CRUD operations related to tasks.
+- **`Task.model.js`**: Defines the MongoDB schema for tasks.
+- **`User.model.js`**: Defines the MongoDB schema for users.
+- **`authMiddleware.js`**: Middleware for user authentication using JWT tokens.
+- **`db.js`**: Configures the MongoDB connection.
+- **`index.js`**: Main entry point of the backend application, configures server, and routes.
 
-- **GET /flights**: Fetch a list of all flights.
-- **POST /flights/create**: Create a new flight.
-- **PUT /flights/edit/:flightId**: Update a flight by ID.
-- **DELETE /flights/delete/:flightId**: Delete a flight by ID.
+## Endpoints
 
-### Messages
+### Authentication
 
-- **GET /messages**: Fetch a list of all messages.
-- **POST /messages/create**: Create a new message.
-- **DELETE /messages/delete/:messageId**: Delete a message by ID.
+- `POST /signup`: Register a new user. Requires a JSON body with `name`, `email`, and `password` fields.
+- `POST /login`: Log in an existing user. Requires a JSON body with `email` and `password` fields.
 
-## Searching
+### Tasks
 
-- The browsing endpoints `/destinations` support query parameters for searching. You can add query parameters to filter and search based on specific attributes. For example:
-  - `/destinations?search=beach`: Search for destinations with "beach" in their name.
+- `POST /api/tasks`: Create a new task for the authenticated user. Requires a JSON body with `title`, `description`, `priority`, and `cardColor` fields.
+- `GET /api/tasks`: Get all tasks of the authenticated user. Supports query parameters for filtering and sorting:
+  - `title`: Search tasks by title (optional).
+  - `sortPriority`: Sort tasks by priority (optional).
+  - `sortCompleted`: Sort tasks by completion status (optional).
+- `GET /api/tasks/:id`: Get a single task of the authenticated user by ID.
+- `PUT /api/tasks/:id`: Update a task of the authenticated user by ID. Requires a JSON body with fields to update.
+- `DELETE /api/tasks/:id`: Delete a task of the authenticated user by ID.
 
-## Example Usage
+## Technologies Used
 
-Here's an example of how to use the Fetch API to interact with the API endpoints in JavaScript:
+- **Node.js**: Backend JavaScript runtime environment.
+- **Express.js**: Web application framework for Node.js.
+- **MongoDB**: NoSQL database for storing task and user data.
+- **JWT (JSON Web Tokens)**: For secure user authentication.
+- **bcrypt**: For password hashing and encryption.
+- **dotenv**: For loading environment variables.
+- **cors**: Middleware for enabling CORS in Express.js.
 
-```javascript
-// Fetch destinations
-fetch("/destinations")
-  .then((response) => response.json())
-  .then((destinations) => {
-    console.log(destinations); // Array of destination objects
-  })
-  .catch((error) => {
-    console.error("Error fetching destinations:", error);
-  });
 
-// Create a new hotel
-fetch("/hotels/create", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    name: "Sample Hotel",
-    image: "sample-hotel-image.jpg",
-    room_price: 150,
-    rating: 4,
-    facilities: ["Pool", "Spa", "Restaurant"],
-    address: "123 Main St, City",
-  }),
-})
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data); // Should print "New hotel added"
-  })
-  .catch((error) => {
-    console.error("Error creating hotel:", error);
-  });
-```
+
+This project is licensed under the [License Name] License.
+
+---
+
+Feel free to customize this README according to your preferences and add any additional information or instructions as needed. If you have any questions or need further assistance, please don't hesitate to ask!
