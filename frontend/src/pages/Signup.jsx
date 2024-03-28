@@ -13,7 +13,7 @@ const Signup = () => {
     password: "",
   });
   const [show, setShow] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({}); // Initialize errors state
   const navigate = useNavigate();
 
   const handleShow = () => {
@@ -33,8 +33,8 @@ const Signup = () => {
       transition: Bounce,
     });
 
-  const errorNotify = () =>
-    toast.error("🫢 Something went wrong", {
+  const errorNotify = (message) =>
+    toast.error(message, {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -88,11 +88,16 @@ const Signup = () => {
         }, 3000);
       } else {
         console.error("Error:", response.statusText);
-        errorNotify();
+        errorNotify("🫢 Something went wrong");
       }
     } catch (error) {
-      console.log(error);
-      errorNotify();
+      if (error.response && error.response.status === 400) {
+        // Email already exists
+        errorNotify("🛑 Email already exists");
+      } else {
+        console.log(error);
+        errorNotify("🫢 Something went wrong");
+      }
     }
   };
 
