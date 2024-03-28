@@ -19,7 +19,7 @@ app.use(cors());
 // Signup Route
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
-
+  console.log(req.body); // Log the request body to check the received data
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new UserModel({
