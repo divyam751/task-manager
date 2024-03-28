@@ -64,8 +64,4 @@ To run the backend locally, follow these steps:
 
 
 
-This project is licensed under the [License Name] License.
 
----
-
-Feel free to customize this README according to your preferences and add any additional information or instructions as needed. If you have any questions or need further assistance, please don't hesitate to ask!
