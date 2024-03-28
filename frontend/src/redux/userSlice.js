@@ -24,6 +24,9 @@ const userSlice = createSlice({
     setLogout: (state) => {
       state.userData = { name: "UserName", token: "", message: "" };
     },
+    reload: (state) => {
+      state.userData = loadSessionStore();
+    },
   },
 });
 
@@ -34,6 +37,6 @@ const setSessionStore = (state) => {
   }
 };
 
-export const { setUserDetails, setLogout } = userSlice.actions;
+export const { setUserDetails, setLogout, reload } = userSlice.actions;
 
 export default userSlice.reducer;
