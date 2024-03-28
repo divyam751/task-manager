@@ -1,5 +1,3 @@
-// Home.js
-
 import FeatureCard from "../components/FeatureCard";
 import "../styles/Home.css";
 

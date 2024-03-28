@@ -17,14 +17,14 @@ const TaskModal = ({ onClose, onSave }) => {
 
   const handleSave = () => {
     if (!title.trim() || !description.trim()) {
-      toast.error("Please enter both title and description."); // Display error toast
+      toast.error("Please enter both title and description.");
       return;
     }
 
     const taskData = { title, description, cardColor, priority };
 
     axios
-      .post("http://localhost:8000/api/tasks/", taskData, {
+      .post("https://task-manager-pi-topaz.vercel.app/api/tasks/", taskData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,13 +37,13 @@ const TaskModal = ({ onClose, onSave }) => {
       })
       .catch((error) => {
         console.error("Error saving task:", error);
-        toast.error("Error saving task. Please try again."); // Display error toast
+        toast.error("Error saving task. Please try again.");
       });
   };
 
   return (
     <div className="task-modal">
-      <ToastContainer /> {/* Toast container */}
+      <ToastContainer />
       <div className="modal-content">
         <span className="close" onClick={onClose}>
           &times;

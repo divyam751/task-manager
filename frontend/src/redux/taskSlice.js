@@ -4,12 +4,15 @@ import axios from "axios";
 export const getTasks = createAsyncThunk("task/getTasks", async (token) => {
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`, // Set the Authorization header with the token
+      Authorization: `Bearer ${token}`,
     },
   };
 
-  const response = await axios.get("http://localhost:8000/api/tasks", config);
-  return response.data; // Return only the data from the response
+  const response = await axios.get(
+    "https://task-manager-pi-topaz.vercel.app/api/tasks",
+    config
+  );
+  return response.data;
 });
 
 const taskSlice = createSlice({

@@ -33,7 +33,6 @@ const Task = () => {
   };
 
   const handleSaveTask = (taskData) => {
-    // You can dispatch an action to save the task data here
     console.log("Task data:", taskData);
   };
 
@@ -43,17 +42,20 @@ const Task = () => {
 
   const fetchTasks = debounce(async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/tasks/", {
-        params: {
-          title: searchText,
-          sortPriority: sortPriority,
-          sortCompleted: sortCompleted,
-          sortPending: sortPending,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "https://task-manager-pi-topaz.vercel.app/api/tasks/",
+        {
+          params: {
+            title: searchText,
+            sortPriority: sortPriority,
+            sortCompleted: sortCompleted,
+            sortPending: sortPending,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       dispatch(setApiData(response.data));
     } catch (error) {
       console.error("Error fetching tasks:", error);

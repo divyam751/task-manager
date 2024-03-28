@@ -42,17 +42,17 @@ const TaskCard = ({ data }) => {
     // Send PUT request to update completion status
     axios
       .put(
-        `http://localhost:8000/api/tasks/${data._id}`,
+        `https://task-manager-pi-topaz.vercel.app/api/tasks/${data._id}`,
         { completed: e.target.checked },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Include the token in the request headers
+            Authorization: `Bearer ${token}`,
           },
         }
       )
       .then((response) => {
         console.log("Task updated successfully:", response.data);
-        dispatch(getTasks(token)); // Update Redux store
+        dispatch(getTasks(token));
       })
       .catch((error) => {
         console.error("Error updating task:", error);
@@ -60,9 +60,6 @@ const TaskCard = ({ data }) => {
   };
 
   const handleSubmit = () => {
-    // Perform any submit logic here
-
-    // Create task data object to send in the PUT request
     const taskData = {
       title: title,
       description: description,
@@ -74,35 +71,34 @@ const TaskCard = ({ data }) => {
     axios
       .put(`http://localhost:8000/api/tasks/${data._id}`, taskData, {
         headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the request headers
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        // Handle successful response if needed
         console.log("Task updated successfully:", response.data);
-        dispatch(getTasks(token)); // Update Redux store
-        setIsEditing(false); // Exit edit mode
+        dispatch(getTasks(token));
+        setIsEditing(false);
       })
       .catch((error) => {
-        // Handle errors if needed
         console.error("Error updating task:", error);
       });
   };
 
   const handleDelete = () => {
     axios
-      .delete(`http://localhost:8000/api/tasks/${data._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the request headers
-        },
-      })
+      .delete(
+        `https://task-manager-pi-topaz.vercel.app/api/tasks/${data._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
-        // Handle successful response if needed
         console.log("Task Deleted successfully:", response.data);
-        dispatch(getTasks(token)); // Update Redux store
+        dispatch(getTasks(token));
       })
       .catch((error) => {
-        // Handle errors if needed
         console.error("Error in Delete task:", error);
       });
   };

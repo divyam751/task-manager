@@ -8,8 +8,6 @@ import Task from "./pages/Task";
 import Home from "./pages/Home";
 
 function App() {
-  // Retrieve user authentication state from Redux store
-
   const { token } = useSelector((state) => state.user.userData || state.user);
 
   const isAuthenticated = token !== "" ? true : false;
