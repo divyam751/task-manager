@@ -69,11 +69,15 @@ const TaskCard = ({ data }) => {
 
     // Set up the Axios PUT request
     axios
-      .put(`http://localhost:8000/api/tasks/${data._id}`, taskData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .put(
+        `https://task-manager-pi-topaz.vercel.app/api/tasks/${data._id}`,
+        taskData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
         console.log("Task updated successfully:", response.data);
         dispatch(getTasks(token));
