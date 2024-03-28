@@ -1,0 +1,136 @@
+.task-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #023047;
+  display: flex;
+}
+.task-leftChild {
+  width: 320px;
+  min-height: 90vh;
+  background-color: #023047;
+  border-top: 2px solid black;
+  border-right: 2px solid #023047;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.task-userSection {
+  width: 300px;
+  height: fit-content;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-size: 25px;
+  padding: 8px;
+}
+.task-userImage {
+  width: 50px;
+  height: 50px;
+  border: 2px solid white;
+  border-radius: 50%;
+  margin-left: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  color: black;
+}
+.task-userImage > img {
+  width: 100%;
+}
+
+/* Search Section */
+
+.task-searchSection {
+  width: 300px;
+  height: fit-content;
+  color: white;
+  font-size: 30px;
+  padding: 7px;
+  border: 1px solid rgb(129, 128, 128);
+}
+.task-searchBar {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 25px;
+  color: white;
+  padding: 10px 0px;
+}
+
+/* Task button */
+.task-addNewTaskButton {
+  width: 100%;
+  font-size: 25px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* sort section */
+.task-sortSection {
+  max-width: 100%;
+  height: 200px;
+  font-size: 20px;
+  border: 2px solid white;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+}
+.task-sortHeading {
+  max-width: 100%;
+  height: fit-content;
+  background-color: white;
+  color: black;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+.task-sortByBox {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+/* task-rightChild */
+
+.task-rightChild {
+  max-width: 100%;
+  min-height: 100vh;
+  background-color: white;
+  width: 100%;
+}
+.task-rightChild-cards {
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  margin: 20px;
+}
+
+.task-rightChild-cards-emptycard {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 50px;
+}
+.task-rightChild-cards-emptycard > p {
+  font-size: 30px;
+  font-weight: bold;
+}
+.task-rightChild-cards-emptycard > img {
+  width: 250px;
+}

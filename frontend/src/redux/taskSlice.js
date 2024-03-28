@@ -1,9 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-export const getTasks = createAsyncThunk("task/getTasks", async () => {
-  const response = await fetch("http://localhost:8000/api/tasks");
-  const taskData = await response.json();
-  return taskData;
+export const getTasks = createAsyncThunk("task/getTasks", async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`, // Set the Authorization header with the token
+    },
+  };
+
+  const response = await axios.get("http://localhost:8000/api/tasks", config);
+  return response.data; // Return only the data from the response
 });
 
 const taskSlice = createSlice({
@@ -36,6 +42,9 @@ const taskSlice = createSlice({
         }
       }
     },
+    setApiData: (state, { payload }) => {
+      state.apiData = payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -53,5 +62,5 @@ const taskSlice = createSlice({
   },
 });
 
-export const { searchQuery, setCustomFilter } = taskSlice.actions;
+export const { searchQuery, setCustomFilter, setApiData } = taskSlice.actions;
 export default taskSlice.reducer;
