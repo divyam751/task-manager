@@ -14,7 +14,18 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+
+const corsOptions = {
+  origin: "https://task-manager-frontend-flame.vercel.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
+app.get("/", (req, res) => {
+  res.send({ msg: "Home Route" });
+});
 
 // Signup Route
 app.post("/signup", async (req, res) => {
